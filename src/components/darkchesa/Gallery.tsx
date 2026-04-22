@@ -221,7 +221,7 @@ export const Gallery = () => {
                             </div>
                           </div>
                           <div className="font-display text-base text-ivory whitespace-nowrap">
-                            <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">KES</span>
+                            <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
                             {s.price}
                           </div>
                         </li>
