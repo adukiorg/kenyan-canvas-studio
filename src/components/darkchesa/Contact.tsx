@@ -1,9 +1,14 @@
 import { FormEvent, useState } from "react";
-import { Phone, Mail, MapPin, Instagram, Music2, Twitter } from "lucide-react";
+import { Phone, MapPin, Instagram, MessageCircle, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { Section } from "./Section";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+
+const PHONE_DISPLAY = "+254 793 948 975";
+const PHONE_TEL = "+254793948975";
+const PHONE_WA = "254793948975";
+const IG_HANDLE = "darkchesa_art";
 
 export const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +25,18 @@ export const Contact = () => {
     }, 700);
   };
 
+  const channels = [
+    { Icon: Phone, label: "Call", value: PHONE_DISPLAY, href: `tel:${PHONE_TEL}` },
+    { Icon: MessageSquare, label: "SMS", value: PHONE_DISPLAY, href: `sms:${PHONE_TEL}` },
+    {
+      Icon: MessageCircle,
+      label: "WhatsApp",
+      value: PHONE_DISPLAY,
+      href: `https://wa.me/${PHONE_WA}?text=${encodeURIComponent("Hello DARKCHESA, I'd like to inquire about a commission.")}`,
+    },
+    { Icon: Instagram, label: "Instagram", value: `@${IG_HANDLE}`, href: `https://instagram.com/${IG_HANDLE}` },
+  ];
+
   return (
     <Section
       id="contact"
@@ -30,62 +47,34 @@ export const Contact = () => {
     >
       <div className="grid lg:grid-cols-12 gap-12">
         {/* Info */}
-        <div className="lg:col-span-5 space-y-8">
-          <a
-            href="https://wa.me/254700000000"
-            target="_blank"
-            rel="noreferrer"
-            className="group flex items-start gap-4 border border-border p-6 hover:border-crimson transition-colors"
-          >
-            <Phone className="text-crimson mt-1" size={20} strokeWidth={1.25} />
-            <div>
-              <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">
-                Phone · WhatsApp
+        <div className="lg:col-span-5 space-y-4">
+          {channels.map(({ Icon, label, value, href }) => (
+            <a
+              key={label}
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              className="group flex items-start gap-4 border border-border p-5 hover:border-crimson transition-colors"
+            >
+              <Icon className="text-crimson mt-1" size={20} strokeWidth={1.25} />
+              <div>
+                <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">
+                  {label}
+                </div>
+                <div className="font-display text-lg text-ivory group-hover:text-crimson transition-colors">
+                  {value}
+                </div>
               </div>
-              <div className="font-display text-lg text-ivory group-hover:text-crimson transition-colors">
-                +254 700 000 000
-              </div>
-            </div>
-          </a>
+            </a>
+          ))}
 
-          <a
-            href="mailto:studio@darkchesa.art"
-            className="group flex items-start gap-4 border border-border p-6 hover:border-crimson transition-colors"
-          >
-            <Mail className="text-crimson mt-1" size={20} strokeWidth={1.25} />
-            <div>
-              <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">Email</div>
-              <div className="font-display text-lg text-ivory group-hover:text-crimson transition-colors">
-                studio@darkchesa.art
-              </div>
-            </div>
-          </a>
-
-          <div className="flex items-start gap-4 border border-border p-6">
+          <div className="flex items-start gap-4 border border-border p-5">
             <MapPin className="text-crimson mt-1" size={20} strokeWidth={1.25} />
             <div>
               <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">Studio</div>
               <div className="font-display text-lg text-ivory">Nairobi, Kenya</div>
               <div className="text-sm text-muted-foreground mt-1">By appointment only</div>
             </div>
-          </div>
-
-          <div className="flex items-center gap-1 pt-4">
-            <span className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mr-4">Follow</span>
-            {[
-              { Icon: Instagram, label: "Instagram" },
-              { Icon: Music2, label: "TikTok" },
-              { Icon: Twitter, label: "X" },
-            ].map(({ Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="h-10 w-10 flex items-center justify-center text-ivory/60 hover:text-crimson hover:border-crimson border border-transparent transition-colors"
-              >
-                <Icon size={16} strokeWidth={1.5} />
-              </a>
-            ))}
           </div>
         </div>
 
