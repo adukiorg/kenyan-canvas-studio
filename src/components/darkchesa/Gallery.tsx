@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { ArrowRight, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Section } from "./Section";
 import { Placeholder } from "./Placeholder";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 type Cat = "All" | "Sketches" | "Colored" | "Prints";
+
+interface Size {
+  size: string;
+  dims: string;
+  price: string;
+}
 
 interface Work {
   title: string;
@@ -14,30 +20,71 @@ interface Work {
   year: string;
   medium: string;
   edition: string;
+  sizes: Size[];
 }
 
+const sketchSizes: Size[] = [
+  { size: "A4", dims: "21 × 29.7 cm", price: "4,500" },
+  { size: "A3", dims: "29.7 × 42 cm", price: "7,500" },
+  { size: "A2", dims: "42 × 59.4 cm", price: "12,000" },
+];
+const colorSizes: Size[] = [
+  { size: "A4", dims: "21 × 29.7 cm", price: "8,000" },
+  { size: "A3", dims: "29.7 × 42 cm", price: "12,500" },
+  { size: "A2", dims: "42 × 59.4 cm", price: "18,000" },
+];
+const printSizes: Size[] = [
+  { size: "A4 Print", dims: "21 × 29.7 cm", price: "2,500" },
+  { size: "A3 Framed", dims: "29.7 × 42 cm", price: "9,500" },
+  { size: "A2 Framed", dims: "42 × 59.4 cm", price: "13,500" },
+];
+
 const works: Work[] = [
-  { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1" },
-  { title: "Color 01 — Maasai Light", cat: "Colored", ratio: "tall", year: "2024", medium: "Digital painting", edition: "Edition of 12" },
-  { title: "Print 01 — Edition of 12", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée, A3", edition: "Edition of 12" },
-  { title: "Sketch 02 — Hands at Rest", cat: "Sketches", ratio: "landscape", year: "2025", medium: "Charcoal study", edition: "Original · 1 of 1" },
-  { title: "Color 02 — Mother & Child", cat: "Colored", ratio: "portrait", year: "2024", medium: "Digital painting", edition: "Edition of 8" },
-  { title: "Print 02 — Framed A2", cat: "Prints", ratio: "portrait", year: "2024", medium: "Archival giclée, A2 framed", edition: "Edition of 6" },
-  { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1" },
-  { title: "Color 03 — Market Morning", cat: "Colored", ratio: "landscape", year: "2025", medium: "Digital painting", edition: "Edition of 10" },
-  { title: "Print 03 — Diptych", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée, paired A3", edition: "Edition of 5" },
-  { title: "Color 04 — Quiet Window", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12" },
+  { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "Color 01 — Maasai Light", cat: "Colored", ratio: "tall", year: "2024", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
+  { title: "Print 01 — Edition of 12", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée", edition: "Edition of 12", sizes: printSizes },
+  { title: "Sketch 02 — Hands at Rest", cat: "Sketches", ratio: "landscape", year: "2025", medium: "Charcoal study", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "Color 02 — Mother & Child", cat: "Colored", ratio: "portrait", year: "2024", medium: "Digital painting", edition: "Edition of 8", sizes: colorSizes },
+  { title: "Print 02 — Framed A2", cat: "Prints", ratio: "portrait", year: "2024", medium: "Archival giclée, framed", edition: "Edition of 6", sizes: printSizes },
+  { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "Color 03 — Market Morning", cat: "Colored", ratio: "landscape", year: "2025", medium: "Digital painting", edition: "Edition of 10", sizes: colorSizes },
+  { title: "Print 03 — Diptych", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée, paired", edition: "Edition of 5", sizes: printSizes },
+  { title: "Color 04 — Quiet Window", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
 ];
 
 const filters: Cat[] = ["All", "Sketches", "Colored", "Prints"];
 
 export const Gallery = () => {
   const [active, setActive] = useState<Cat>("All");
-  const [selected, setSelected] = useState<Work | null>(null);
-  const filtered = active === "All" ? works : works.filter((w) => w.cat === active);
+  const [index, setIndex] = useState<number | null>(null);
 
-  const inquire = () => {
-    setSelected(null);
+  const filtered = active === "All" ? works : works.filter((w) => w.cat === active);
+  const selected = index !== null ? filtered[index] : null;
+
+  const close = () => setIndex(null);
+  const prev = () => setIndex((i) => (i === null ? null : (i - 1 + filtered.length) % filtered.length));
+  const next = () => setIndex((i) => (i === null ? null : (i + 1) % filtered.length));
+
+  useEffect(() => {
+    if (selected === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selected]);
+
+  const inquireWhatsApp = () => {
+    if (!selected) return;
+    const text = encodeURIComponent(
+      `Hello DARKCHESA, I'd like to inquire about "${selected.title}" (${selected.cat}, ${selected.year}).`,
+    );
+    window.open(`https://wa.me/254793948975?text=${text}`, "_blank");
+  };
+
+  const inquireForm = () => {
+    close();
     setTimeout(() => {
       document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     }, 200);
@@ -48,7 +95,7 @@ export const Gallery = () => {
       id="gallery"
       eyebrow="Selected Work"
       title={<>The <em className="text-crimson not-italic font-display italic">gallery.</em></>}
-      intro="A rotating selection of recent commissions and personal studies. Tap any piece to view details."
+      intro="A rotating selection of recent commissions and personal studies. Tap any piece for sizes & pricing."
     >
       <div className="flex flex-wrap items-center gap-2 md:gap-1 mb-12 border-b border-border pb-4">
         {filters.map((f) => (
@@ -77,7 +124,7 @@ export const Gallery = () => {
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <button
-              onClick={() => setSelected(w)}
+              onClick={() => setIndex(i)}
               className="block w-full text-left group"
               aria-label={`View ${w.title}`}
             >
@@ -91,66 +138,117 @@ export const Gallery = () => {
         ))}
       </div>
 
-      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
-        <DialogContent className="max-w-4xl bg-charcoal border-border p-0 overflow-hidden [&>button]:hidden">
-          {selected && (
-            <div className="grid md:grid-cols-2">
-              <button
-                onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 z-10 h-9 w-9 flex items-center justify-center bg-charcoal/70 backdrop-blur border border-border text-ivory hover:text-crimson hover:border-crimson transition-colors"
-                aria-label="Close"
-              >
-                <X size={16} />
-              </button>
-
-              <div className="relative bg-charcoal-soft p-6 md:p-8 flex items-center">
-                <div className="absolute -inset-0 md:inset-4 md:border md:border-crimson/20 pointer-events-none" />
-                <Placeholder
-                  label={selected.cat}
-                  caption={selected.title}
-                  ratio={selected.ratio}
-                  className="shadow-frame"
-                />
+      <Dialog open={selected !== null} onOpenChange={(o) => !o && close()}>
+        <DialogContent className="max-w-5xl bg-charcoal border-border p-0 overflow-hidden [&>button]:hidden max-h-[92vh] overflow-y-auto">
+          {selected && index !== null && (
+            <div className="relative">
+              {/* Top controls */}
+              <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
+                <span className="hidden sm:inline-block text-[10px] tracking-[0.3em] uppercase text-muted-foreground bg-charcoal/70 backdrop-blur px-3 py-2 border border-border">
+                  {String(index + 1).padStart(2, "0")} / {String(filtered.length).padStart(2, "0")}
+                </span>
+                <button
+                  onClick={close}
+                  className="h-9 w-9 flex items-center justify-center bg-charcoal/70 backdrop-blur border border-border text-ivory hover:text-crimson hover:border-crimson transition-colors"
+                  aria-label="Close"
+                >
+                  <X size={16} />
+                </button>
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col">
-                <div className="text-[10px] tracking-[0.4em] uppercase text-crimson mb-4">
-                  {selected.cat} · {selected.year}
+              {/* Nav arrows */}
+              <button
+                onClick={prev}
+                aria-label="Previous artwork"
+                className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 flex items-center justify-center bg-charcoal/70 backdrop-blur border border-border text-ivory hover:text-crimson hover:border-crimson transition-colors"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                onClick={next}
+                aria-label="Next artwork"
+                className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 flex items-center justify-center bg-charcoal/70 backdrop-blur border border-border text-ivory hover:text-crimson hover:border-crimson transition-colors"
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              <div key={selected.title} className="grid md:grid-cols-2 animate-fade-in">
+                <div className="relative bg-charcoal-soft p-6 md:p-10 flex items-center">
+                  <div className="absolute inset-4 md:inset-6 border border-crimson/20 pointer-events-none" />
+                  <Placeholder
+                    label={selected.cat}
+                    caption={selected.title}
+                    ratio={selected.ratio}
+                    className="shadow-frame"
+                  />
                 </div>
-                <DialogTitle className="font-display text-3xl md:text-4xl text-ivory leading-tight">
-                  {selected.title}
-                </DialogTitle>
 
-                <dl className="mt-8 space-y-4 border-y border-border py-6 text-sm">
-                  <div className="flex justify-between gap-4">
-                    <dt className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Medium</dt>
-                    <dd className="text-ivory/90 text-right">{selected.medium}</dd>
+                <div className="p-8 md:p-10 flex flex-col">
+                  <div className="text-[10px] tracking-[0.4em] uppercase text-crimson mb-4">
+                    {selected.cat} · {selected.year}
                   </div>
-                  <div className="flex justify-between gap-4">
-                    <dt className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Edition</dt>
-                    <dd className="text-ivory/90 text-right">{selected.edition}</dd>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <dt className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Studio</dt>
-                    <dd className="text-ivory/90 text-right">DARKCHESA · Nairobi</dd>
-                  </div>
-                </dl>
+                  <DialogTitle className="font-display text-3xl md:text-4xl text-ivory leading-tight">
+                    {selected.title}
+                  </DialogTitle>
 
-                <DialogDescription className="mt-6 text-sm text-muted-foreground leading-relaxed font-display italic">
-                  Drawn to this piece? Commission a similar portrait — or request this exact work as a
-                  signed archival print, framed to your space.
-                </DialogDescription>
+                  <dl className="mt-6 space-y-3 border-y border-border py-5 text-sm">
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Medium</dt>
+                      <dd className="text-ivory/90 text-right">{selected.medium}</dd>
+                    </div>
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Edition</dt>
+                      <dd className="text-ivory/90 text-right">{selected.edition}</dd>
+                    </div>
+                  </dl>
 
-                <button
-                  onClick={inquire}
-                  className="group mt-8 inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-6 py-4 text-xs tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
-                >
-                  Inquire About This Piece
-                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                </button>
-                <p className="mt-3 text-[10px] tracking-[0.25em] uppercase text-muted-foreground text-center">
-                  Studio replies within 24 hours
-                </p>
+                  {/* Sizes & pricing */}
+                  <div className="mt-6">
+                    <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
+                      Sizes & Pricing
+                    </div>
+                    <ul className="divide-y divide-border border border-border">
+                      {selected.sizes.map((s) => (
+                        <li key={s.size} className="flex items-center justify-between gap-3 px-4 py-3">
+                          <div>
+                            <div className="font-display text-base text-ivory">{s.size}</div>
+                            <div className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                              {s.dims}
+                            </div>
+                          </div>
+                          <div className="font-display text-base text-ivory whitespace-nowrap">
+                            <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">KES</span>
+                            {s.price}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <DialogDescription className="mt-5 text-sm text-muted-foreground leading-relaxed font-display italic">
+                    Drawn to this piece? Inquire to commission a similar portrait or order this work as a
+                    signed archival print.
+                  </DialogDescription>
+
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={inquireWhatsApp}
+                      className="group flex-1 inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-5 py-3 text-[10px] tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
+                    >
+                      Inquire on WhatsApp
+                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    </button>
+                    <button
+                      onClick={inquireForm}
+                      className="flex-1 inline-flex items-center justify-center border border-border text-ivory hover:border-crimson hover:text-crimson px-5 py-3 text-[10px] tracking-[0.3em] uppercase transition-colors"
+                    >
+                      Use Form
+                    </button>
+                  </div>
+                  <p className="mt-3 text-[10px] tracking-[0.25em] uppercase text-muted-foreground text-center">
+                    Studio replies within 24 hours · ← → to browse
+                  </p>
+                </div>
               </div>
             </div>
           )}
