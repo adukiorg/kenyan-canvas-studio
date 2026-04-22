@@ -138,14 +138,14 @@ export const Pricing = () => {
           </h3>
           <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
             Complete transparency on what your commission covers — sketch, colour, HD CMYK printing
-            and A2 framing. Priced in USD for international clients.
+            and A2 framing. All prices in $.
           </p>
         </div>
 
         <div className="lg:col-span-8 bg-card border border-border">
           <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
             <span className="col-span-8">Expense</span>
-            <span className="col-span-4 text-right">Price (USD)</span>
+            <span className="col-span-4 text-right">Price ($)</span>
           </div>
           <ul>
             {[
@@ -160,7 +160,7 @@ export const Pricing = () => {
               >
                 <span className="col-span-8 font-display text-lg text-ivory">{row.label}</span>
                 <span className="col-span-4 text-right font-display text-lg text-ivory">
-                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">USD</span>
+                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
                   {row.price}
                 </span>
               </li>
@@ -169,7 +169,7 @@ export const Pricing = () => {
           <div className="grid grid-cols-12 items-baseline px-6 md:px-8 py-6 bg-gradient-crimson text-primary-foreground">
             <span className="col-span-8 text-[10px] tracking-[0.4em] uppercase">Total</span>
             <span className="col-span-4 text-right font-display text-2xl md:text-3xl">
-              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">USD</span>
+              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">$</span>
               303.98
             </span>
           </div>
