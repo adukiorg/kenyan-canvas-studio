@@ -137,7 +137,7 @@ export const Gallery = () => {
               className="block w-full text-left group"
               aria-label={`View ${w.title}`}
             >
-              <Placeholder label={w.cat} caption={w.title} ratio={w.ratio} />
+              <Placeholder label={w.cat} caption={w.title} ratio={w.ratio} image={w.image} alt={w.title} />
               <figcaption className="mt-3 flex items-baseline justify-between text-[10px] tracking-[0.25em] uppercase">
                 <span className="text-ivory/80 group-hover:text-crimson transition-colors">{w.title}</span>
                 <span className="text-crimson">{w.cat}</span>
