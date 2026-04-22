@@ -92,12 +92,8 @@ export const Gallery = () => {
     window.open(`https://wa.me/254793948975?text=${text}`, "_blank");
   };
 
-  const inquireForm = () => {
-    close();
-    setTimeout(() => {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-    }, 200);
-  };
+  // WhatsApp is the default inquiry channel (no form).
+
 
   return (
     <Section
@@ -145,6 +141,61 @@ export const Gallery = () => {
             </button>
           </figure>
         ))}
+      </div>
+
+      {/* Artwork Sizes & Pricing Table */}
+      <div className="mt-20 md:mt-28">
+        <div className="flex items-center gap-3 mb-6 text-[10px] tracking-[0.4em] uppercase text-crimson">
+          <span className="h-px w-8 bg-crimson" />
+          Artwork Sizes
+        </div>
+        <h3 className="font-display text-3xl md:text-4xl text-ivory leading-tight max-w-2xl">
+          Standard sizes & <em className="not-italic font-display italic text-crimson">studio pricing.</em>
+        </h3>
+        <p className="mt-4 text-sm text-muted-foreground max-w-2xl">
+          All artworks are produced in three standard formats. Prices below are the studio rate per
+          format; framing and finishing options shown on each piece.
+        </p>
+
+        <div className="mt-8 bg-card border border-border overflow-hidden">
+          <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+            <span className="col-span-3">Size</span>
+            <span className="col-span-3">Dimensions</span>
+            <span className="col-span-2 text-right">Sketch ($)</span>
+            <span className="col-span-2 text-right">Color ($)</span>
+            <span className="col-span-2 text-right">Print ($)</span>
+          </div>
+          {[
+            { size: "A4", dims: "21 × 29.7 cm", sketch: "95.72", color: "190.55", print: "52.98" },
+            { size: "A3", dims: "29.7 × 42 cm", sketch: "95.72", color: "190.55", print: "98.28" },
+            { size: "A2", dims: "42 × 59.4 cm", sketch: "95.72", color: "190.55", print: "113.43" },
+          ].map((row) => (
+            <div
+              key={row.size}
+              className="grid grid-cols-12 items-baseline px-6 md:px-8 py-5 border-b border-border last:border-b-0 hover:bg-charcoal-soft/60 transition-colors"
+            >
+              <span className="col-span-3 font-display text-lg text-ivory">{row.size}</span>
+              <span className="col-span-3 text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                {row.dims}
+              </span>
+              <span className="col-span-2 text-right font-display text-base text-ivory">
+                <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
+                {row.sketch}
+              </span>
+              <span className="col-span-2 text-right font-display text-base text-ivory">
+                <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
+                {row.color}
+              </span>
+              <span className="col-span-2 text-right font-display text-base text-ivory">
+                <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
+                {row.print}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+          Sketch = graphite original · Color = sketch + digital colour · Print = HD CMYK archival (A3/A2 framed)
+        </p>
       </div>
 
       <Dialog open={selected !== null} onOpenChange={(o) => !o && close()}>
@@ -241,19 +292,13 @@ export const Gallery = () => {
                     signed archival print.
                   </DialogDescription>
 
-                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <div className="mt-6">
                     <button
                       onClick={inquireWhatsApp}
-                      className="group flex-1 inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-5 py-3 text-[10px] tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
+                      className="group w-full inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-5 py-3 text-[10px] tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
                     >
                       Inquire on WhatsApp
                       <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </button>
-                    <button
-                      onClick={inquireForm}
-                      className="flex-1 inline-flex items-center justify-center border border-border text-ivory hover:border-crimson hover:text-crimson px-5 py-3 text-[10px] tracking-[0.3em] uppercase transition-colors"
-                    >
-                      Use Form
                     </button>
                   </div>
                   <p className="mt-3 text-[10px] tracking-[0.25em] uppercase text-muted-foreground text-center">

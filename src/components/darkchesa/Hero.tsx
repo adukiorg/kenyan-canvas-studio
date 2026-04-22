@@ -1,5 +1,6 @@
 import { ArrowDown } from "lucide-react";
 import { Placeholder } from "./Placeholder";
+import heroArt from "@/assets/art-1.jpg";
 
 export const Hero = () => {
   const scrollTo = (id: string) =>
@@ -49,8 +50,10 @@ export const Hero = () => {
             <div className="absolute -inset-12 border border-border" />
             <Placeholder
               label="Featured Work"
-              caption="Untitled · 2025"
+              caption="Bloom in Crimson · 2025"
               ratio="portrait"
+              image={heroArt}
+              alt="Bloom in Crimson — featured digital painting by DARKCHESA"
               className="shadow-gallery"
             />
             <div className="mt-6 flex items-center justify-between text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
