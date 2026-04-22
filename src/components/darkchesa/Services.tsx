@@ -8,25 +8,25 @@ const services = [
     icon: Pencil,
     title: "Sketching",
     desc: "Custom hand-drawn portraits and conceptual studies. Single-subject to full ensembles.",
-    from: "KES 4,500",
+    from: "$95.72",
   },
   {
     icon: Palette,
     title: "Digital Coloring",
     desc: "Painterly digital rendering — skin, fabric, atmosphere brought to life in layered colour.",
-    from: "KES 8,000",
+    from: "$94.83",
   },
   {
     icon: Printer,
-    title: "Art Printing",
-    desc: "Archival giclée prints on heavyweight matte cotton paper. A4, A3 and A2 editions.",
-    from: "KES 2,500",
+    title: "HD CMYK Printing",
+    desc: "High-definition CMYK archival prints on heavyweight matte cotton paper. A4, A3 and A2 sizes.",
+    from: "$52.98",
   },
   {
     icon: Frame,
     title: "Framing",
-    desc: "Hand-finished standard or premium hardwood frames with museum glass options.",
-    from: "KES 3,500",
+    desc: "Hand-finished hardwood frames with museum glass options. A4, A3 and A2 sizes.",
+    from: "$30.25",
   },
 ];
 
