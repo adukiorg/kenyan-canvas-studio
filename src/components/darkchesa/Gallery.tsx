@@ -23,21 +23,25 @@ interface Work {
   sizes: Size[];
 }
 
+// Studio rates: SKETCH 95.72 + COLOR 94.83 + PRINT 52.98 + framing by size (USD)
 const sketchSizes: Size[] = [
-  { size: "A4", dims: "21 × 29.7 cm", price: "4,500" },
-  { size: "A3", dims: "29.7 × 42 cm", price: "7,500" },
-  { size: "A2", dims: "42 × 59.4 cm", price: "12,000" },
+  { size: "A4", dims: "21 × 29.7 cm", price: "95.72" },
+  { size: "A3", dims: "29.7 × 42 cm", price: "95.72" },
+  { size: "A2", dims: "42 × 59.4 cm", price: "95.72" },
 ];
 const colorSizes: Size[] = [
-  { size: "A4", dims: "21 × 29.7 cm", price: "8,000" },
-  { size: "A3", dims: "29.7 × 42 cm", price: "12,500" },
-  { size: "A2", dims: "42 × 59.4 cm", price: "18,000" },
+  // Sketch + color
+  { size: "A4", dims: "21 × 29.7 cm", price: "190.55" },
+  { size: "A3", dims: "29.7 × 42 cm", price: "190.55" },
+  { size: "A2", dims: "42 × 59.4 cm", price: "190.55" },
 ];
 const printSizes: Size[] = [
-  { size: "A4 Print", dims: "21 × 29.7 cm", price: "2,500" },
-  { size: "A3 Framed", dims: "29.7 × 42 cm", price: "9,500" },
-  { size: "A2 Framed", dims: "42 × 59.4 cm", price: "13,500" },
+  // Print only & framed
+  { size: "A4 Print", dims: "21 × 29.7 cm", price: "52.98" },
+  { size: "A3 Framed", dims: "29.7 × 42 cm", price: "98.28" },
+  { size: "A2 Framed", dims: "42 × 59.4 cm", price: "113.43" },
 ];
+
 
 const works: Work[] = [
   { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1", sizes: sketchSizes },
@@ -217,7 +221,7 @@ export const Gallery = () => {
                             </div>
                           </div>
                           <div className="font-display text-base text-ivory whitespace-nowrap">
-                            <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">KES</span>
+                            <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
                             {s.price}
                           </div>
                         </li>

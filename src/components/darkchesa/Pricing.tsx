@@ -3,37 +3,47 @@ import { Section } from "./Section";
 import { cn } from "@/lib/utils";
 import { useReveal } from "@/hooks/use-reveal";
 
+// Fixed studio rates (USD)
+const SKETCH = 95.72;
+const COLOR = 94.83;
+const PRINT = 52.98;
+
+const frameBySize: Record<"A4" | "A3" | "A2", number> = {
+  A4: 30.25,
+  A3: 45.30,
+  A2: 60.45,
+};
+
+const fmt = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+const sizes = ["A4", "A3", "A2"] as const;
+
 const tiers = [
   {
     name: "Print Only",
-    tag: "Archival giclée",
-    items: [
-      { size: "A4", price: "2,500" },
-      { size: "A3", price: "4,000" },
-      { size: "A2", price: "6,500" },
-    ],
-    perks: ["Archival cotton paper", "Signed & numbered", "Studio packaging"],
+    tag: "HD CMYK archival",
+    items: sizes.map((s) => ({ size: s, price: fmt(PRINT) })),
+    perks: ["HD CMYK archival print", "Signed & numbered", "Studio packaging"],
     highlight: false,
   },
   {
-    name: "Standard Framed",
+    name: "Full Commission",
     tag: "Most popular",
-    items: [
-      { size: "A4", price: "6,000" },
-      { size: "A3", price: "9,500" },
-      { size: "A2", price: "13,500" },
-    ],
-    perks: ["Hardwood frame", "Acid-free mount", "Ready to hang"],
+    items: sizes.map((s) => ({
+      size: s,
+      price: fmt(SKETCH + COLOR + PRINT + frameBySize[s]),
+    })),
+    perks: ["Sketch + color + print", "Hardwood frame included", "Ready to hang"],
     highlight: true,
   },
   {
     name: "Premium Framed",
     tag: "Collector edition",
-    items: [
-      { size: "A4", price: "9,500" },
-      { size: "A3", price: "14,000" },
-      { size: "A2", price: "19,500" },
-    ],
+    items: sizes.map((s) => ({
+      size: s,
+      price: fmt(SKETCH + COLOR + PRINT + frameBySize[s] * 1.6),
+    })),
     perks: ["Museum-grade glass", "Hand-finished hardwood", "Certificate of authenticity"],
     highlight: false,
   },
@@ -68,7 +78,7 @@ const Card = ({ t, i }: { t: (typeof tiers)[number]; i: number }) => {
           <li key={it.size} className="flex items-baseline justify-between">
             <span className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">{it.size}</span>
             <span className="font-display text-xl text-ivory">
-              <span className="text-xs text-muted-foreground tracking-[0.2em] mr-1">KES</span>
+              <span className="text-xs text-muted-foreground tracking-[0.2em] mr-1">$</span>
               {it.price}
             </span>
           </li>
@@ -105,7 +115,7 @@ export const Pricing = () => {
       id="pricing"
       eyebrow="Pricing"
       title={<>Transparent <em className="text-crimson not-italic font-display italic">investment.</em></>}
-      intro="All prices in Kenyan Shillings. Custom subjects and ensembles quoted on request."
+      intro="All prices in USD. Custom subjects and ensembles quoted on request."
     >
       <div className="grid md:grid-cols-3 gap-6 md:gap-8 md:pt-6">
         {tiers.map((t, i) => (
@@ -128,14 +138,14 @@ export const Pricing = () => {
           </h3>
           <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
             Complete transparency on what your commission covers — sketch, colour, HD CMYK printing
-            and A2 framing. Priced in USD for international clients.
+            and A2 framing. All prices in $.
           </p>
         </div>
 
         <div className="lg:col-span-8 bg-card border border-border">
           <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
             <span className="col-span-8">Expense</span>
-            <span className="col-span-4 text-right">Price (USD)</span>
+            <span className="col-span-4 text-right">Price ($)</span>
           </div>
           <ul>
             {[
@@ -150,7 +160,7 @@ export const Pricing = () => {
               >
                 <span className="col-span-8 font-display text-lg text-ivory">{row.label}</span>
                 <span className="col-span-4 text-right font-display text-lg text-ivory">
-                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">USD</span>
+                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
                   {row.price}
                 </span>
               </li>
@@ -159,7 +169,7 @@ export const Pricing = () => {
           <div className="grid grid-cols-12 items-baseline px-6 md:px-8 py-6 bg-gradient-crimson text-primary-foreground">
             <span className="col-span-8 text-[10px] tracking-[0.4em] uppercase">Total</span>
             <span className="col-span-4 text-right font-display text-2xl md:text-3xl">
-              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">USD</span>
+              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">$</span>
               303.98
             </span>
           </div>
