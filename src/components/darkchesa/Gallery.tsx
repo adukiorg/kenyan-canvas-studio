@@ -241,19 +241,13 @@ export const Gallery = () => {
                     signed archival print.
                   </DialogDescription>
 
-                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <div className="mt-6">
                     <button
                       onClick={inquireWhatsApp}
-                      className="group flex-1 inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-5 py-3 text-[10px] tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
+                      className="group w-full inline-flex items-center justify-between gap-3 bg-gradient-crimson text-primary-foreground px-5 py-3 text-[10px] tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all"
                     >
                       Inquire on WhatsApp
                       <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </button>
-                    <button
-                      onClick={inquireForm}
-                      className="flex-1 inline-flex items-center justify-center border border-border text-ivory hover:border-crimson hover:text-crimson px-5 py-3 text-[10px] tracking-[0.3em] uppercase transition-colors"
-                    >
-                      Use Form
                     </button>
                   </div>
                   <p className="mt-3 text-[10px] tracking-[0.25em] uppercase text-muted-foreground text-center">
