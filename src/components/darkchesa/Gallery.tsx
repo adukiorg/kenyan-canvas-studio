@@ -102,13 +102,13 @@ export const Gallery = () => {
       title={<>The <em className="text-crimson not-italic font-display italic">gallery.</em></>}
       intro="A rotating selection of recent commissions and personal studies. Tap any piece for sizes & pricing."
     >
-      <div className="flex flex-wrap items-center gap-2 md:gap-1 mb-12 border-b border-border pb-4">
+      <div className="flex flex-nowrap overflow-x-auto items-center gap-2 md:gap-1 mb-12 border-b border-border pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {filters.map((f) => (
           <button
             key={f}
             onClick={() => setActive(f)}
             className={cn(
-              "relative px-4 py-2 text-[10px] md:text-xs tracking-[0.3em] uppercase transition-colors",
+              "relative px-4 py-2 text-[10px] md:text-xs tracking-[0.3em] uppercase transition-colors shrink-0",
               active === f ? "text-ivory" : "text-muted-foreground hover:text-ivory",
             )}
           >
@@ -116,7 +116,7 @@ export const Gallery = () => {
             {active === f && <span className="absolute -bottom-[17px] left-0 right-0 h-px bg-crimson" />}
           </button>
         ))}
-        <span className="ml-auto text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+        <span className="ml-auto text-[10px] tracking-[0.3em] uppercase text-muted-foreground shrink-0 pl-4">
           {String(filtered.length).padStart(2, "0")} pieces
         </span>
       </div>
@@ -157,8 +157,9 @@ export const Gallery = () => {
           format; framing and finishing options shown on each piece.
         </p>
 
-        <div className="mt-8 bg-card border border-border overflow-hidden">
-          <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+        <div className="mt-8 bg-card border border-border overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="min-w-[600px]">
+            <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
             <span className="col-span-3">Size</span>
             <span className="col-span-3">Dimensions</span>
             <span className="col-span-2 text-right">Sketch ($)</span>
@@ -192,6 +193,7 @@ export const Gallery = () => {
               </span>
             </div>
           ))}
+          </div>
         </div>
         <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
           Sketch = graphite original · Color = sketch + digital colour · Print = HD CMYK archival (A3/A2 framed)

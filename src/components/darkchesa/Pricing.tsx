@@ -142,36 +142,38 @@ export const Pricing = () => {
           </p>
         </div>
 
-        <div className="lg:col-span-8 bg-card border border-border">
-          <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-            <span className="col-span-8">Expense</span>
-            <span className="col-span-4 text-right">Price ($)</span>
-          </div>
-          <ul>
-            {[
-              { label: "A2 Framing", price: "60.45" },
-              { label: "Sketch", price: "95.72" },
-              { label: "Color", price: "94.83" },
-              { label: "HD CMYK Printing", price: "52.98" },
-            ].map((row) => (
-              <li
-                key={row.label}
-                className="grid grid-cols-12 items-baseline px-6 md:px-8 py-5 border-b border-border last:border-b-0 hover:bg-charcoal-soft/60 transition-colors"
-              >
-                <span className="col-span-8 font-display text-lg text-ivory">{row.label}</span>
-                <span className="col-span-4 text-right font-display text-lg text-ivory">
-                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
-                  {row.price}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="grid grid-cols-12 items-baseline px-6 md:px-8 py-6 bg-gradient-crimson text-primary-foreground">
-            <span className="col-span-8 text-[10px] tracking-[0.4em] uppercase">Total</span>
-            <span className="col-span-4 text-right font-display text-2xl md:text-3xl">
-              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">$</span>
-              303.98
-            </span>
+        <div className="lg:col-span-8 bg-card border border-border overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="min-w-[400px]">
+            <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+              <span className="col-span-8">Expense</span>
+              <span className="col-span-4 text-right">Price ($)</span>
+            </div>
+            <ul>
+              {[
+                { label: "A2 Framing", price: "60.45" },
+                { label: "Sketch", price: "95.72" },
+                { label: "Color", price: "94.83" },
+                { label: "HD CMYK Printing", price: "52.98" },
+              ].map((row) => (
+                <li
+                  key={row.label}
+                  className="grid grid-cols-12 items-baseline px-6 md:px-8 py-5 border-b border-border last:border-b-0 hover:bg-charcoal-soft/60 transition-colors"
+                >
+                  <span className="col-span-8 font-display text-lg text-ivory">{row.label}</span>
+                  <span className="col-span-4 text-right font-display text-lg text-ivory">
+                    <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">$</span>
+                    {row.price}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="grid grid-cols-12 items-baseline px-6 md:px-8 py-6 bg-gradient-crimson text-primary-foreground">
+              <span className="col-span-8 text-[10px] tracking-[0.4em] uppercase">Total</span>
+              <span className="col-span-4 text-right font-display text-2xl md:text-3xl">
+                <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">$</span>
+                303.98
+              </span>
+            </div>
           </div>
         </div>
       </div>
