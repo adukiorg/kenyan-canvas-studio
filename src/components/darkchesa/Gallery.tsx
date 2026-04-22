@@ -4,6 +4,10 @@ import { Section } from "./Section";
 import { Placeholder } from "./Placeholder";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import art1 from "@/assets/art-1.jpg";
+import art2 from "@/assets/art-2.jpg";
+import art4 from "@/assets/art-4.png";
+import art6 from "@/assets/art-6.png";
 
 type Cat = "All" | "Sketches" | "Colored" | "Prints";
 
@@ -21,6 +25,7 @@ interface Work {
   medium: string;
   edition: string;
   sizes: Size[];
+  image?: string;
 }
 
 // Studio rates: SKETCH 95.72 + COLOR 94.83 + PRINT 52.98 + framing by size (USD)
@@ -42,18 +47,18 @@ const printSizes: Size[] = [
   { size: "A2 Framed", dims: "42 × 59.4 cm", price: "113.43" },
 ];
 
-
+// 4 real artworks + 6 styled placeholders = 10 total
 const works: Work[] = [
+  { title: "Bloom in Crimson", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 12", sizes: colorSizes, image: art1 },
+  { title: "The Ivory Collar", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 10", sizes: colorSizes, image: art2 },
+  { title: "Joy in Silver", cat: "Prints", ratio: "portrait", year: "2024", medium: "HD CMYK archival print, framed", edition: "Edition of 8", sizes: printSizes, image: art4 },
+  { title: "Adornment Study", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes, image: art6 },
   { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1", sizes: sketchSizes },
-  { title: "Color 01 — Maasai Light", cat: "Colored", ratio: "tall", year: "2024", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
-  { title: "Print 01 — Edition of 12", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée", edition: "Edition of 12", sizes: printSizes },
   { title: "Sketch 02 — Hands at Rest", cat: "Sketches", ratio: "landscape", year: "2025", medium: "Charcoal study", edition: "Original · 1 of 1", sizes: sketchSizes },
-  { title: "Color 02 — Mother & Child", cat: "Colored", ratio: "portrait", year: "2024", medium: "Digital painting", edition: "Edition of 8", sizes: colorSizes },
-  { title: "Print 02 — Framed A2", cat: "Prints", ratio: "portrait", year: "2024", medium: "Archival giclée, framed", edition: "Edition of 6", sizes: printSizes },
   { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1", sizes: sketchSizes },
-  { title: "Color 03 — Market Morning", cat: "Colored", ratio: "landscape", year: "2025", medium: "Digital painting", edition: "Edition of 10", sizes: colorSizes },
-  { title: "Print 03 — Diptych", cat: "Prints", ratio: "square", year: "2024", medium: "Archival giclée, paired", edition: "Edition of 5", sizes: printSizes },
-  { title: "Color 04 — Quiet Window", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
+  { title: "Print 01 — Edition of 12", cat: "Prints", ratio: "square", year: "2024", medium: "HD CMYK archival print", edition: "Edition of 12", sizes: printSizes },
+  { title: "Print 02 — Diptych", cat: "Prints", ratio: "square", year: "2024", medium: "HD CMYK archival, paired", edition: "Edition of 5", sizes: printSizes },
+  { title: "Color 04 — Quiet Window", cat: "Colored", ratio: "tall", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
 ];
 
 const filters: Cat[] = ["All", "Sketches", "Colored", "Prints"];
