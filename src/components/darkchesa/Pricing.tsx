@@ -115,6 +115,57 @@ export const Pricing = () => {
       <p className="mt-12 text-center text-xs tracking-[0.25em] uppercase text-muted-foreground">
         Country-wide delivery available · Nairobi pickup free
       </p>
+
+      {/* Full A2 Commission — cost breakdown */}
+      <div className="mt-20 md:mt-28 grid lg:grid-cols-12 gap-10 items-start">
+        <div className="lg:col-span-4">
+          <div className="flex items-center gap-3 mb-5 text-[10px] tracking-[0.4em] uppercase text-crimson">
+            <span className="h-px w-8 bg-crimson" />
+            Cost Breakdown
+          </div>
+          <h3 className="font-display text-3xl md:text-4xl text-ivory leading-tight">
+            A full A2 <em className="not-italic font-display italic text-crimson">commission</em>, line by line.
+          </h3>
+          <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
+            Complete transparency on what your commission covers — sketch, colour, HD CMYK printing
+            and A2 framing. Priced in USD for international clients.
+          </p>
+        </div>
+
+        <div className="lg:col-span-8 bg-card border border-border">
+          <div className="grid grid-cols-12 px-6 md:px-8 py-4 border-b border-border text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+            <span className="col-span-8">Expense</span>
+            <span className="col-span-4 text-right">Price (USD)</span>
+          </div>
+          <ul>
+            {[
+              { label: "A2 Framing", price: "60.45" },
+              { label: "Sketch", price: "95.72" },
+              { label: "Color", price: "94.83" },
+              { label: "HD CMYK Printing", price: "52.98" },
+            ].map((row) => (
+              <li
+                key={row.label}
+                className="grid grid-cols-12 items-baseline px-6 md:px-8 py-5 border-b border-border last:border-b-0 hover:bg-charcoal-soft/60 transition-colors"
+              >
+                <span className="col-span-8 font-display text-lg text-ivory">{row.label}</span>
+                <span className="col-span-4 text-right font-display text-lg text-ivory">
+                  <span className="text-[10px] tracking-[0.2em] text-muted-foreground mr-1">USD</span>
+                  {row.price}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="grid grid-cols-12 items-baseline px-6 md:px-8 py-6 bg-gradient-crimson text-primary-foreground">
+            <span className="col-span-8 text-[10px] tracking-[0.4em] uppercase">Total</span>
+            <span className="col-span-4 text-right font-display text-2xl md:text-3xl">
+              <span className="text-[10px] tracking-[0.2em] opacity-80 mr-1">USD</span>
+              303.98
+            </span>
+          </div>
+        </div>
+      </div>
+
     </Section>
   );
 };
