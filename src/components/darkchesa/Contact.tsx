@@ -1,4 +1,4 @@
-import { Phone, MapPin, Instagram, MessageCircle, MessageSquare, ArrowRight } from "lucide-react";
+import { Phone, MapPin, Share2, MessageCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { Section } from "./Section";
 
 const PHONE_DISPLAY = "+254 793 948 975";
@@ -19,7 +19,7 @@ export const Contact = () => {
     { Icon: Phone, label: "Call", value: PHONE_DISPLAY, href: `tel:${PHONE_TEL}`, featured: false },
     { Icon: MessageSquare, label: "SMS", value: PHONE_DISPLAY, href: `sms:${PHONE_TEL}`, featured: false },
     {
-      Icon: Instagram,
+      Icon: Share2,
       label: "Instagram",
       value: `@${IG_HANDLE}`,
       href: `https://instagram.com/${IG_HANDLE}`,
