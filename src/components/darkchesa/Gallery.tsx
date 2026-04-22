@@ -188,6 +188,8 @@ export const Gallery = () => {
                     label={selected.cat}
                     caption={selected.title}
                     ratio={selected.ratio}
+                    image={selected.image}
+                    alt={selected.title}
                     className="shadow-frame"
                   />
                 </div>
