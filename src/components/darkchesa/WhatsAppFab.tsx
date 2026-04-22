@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 export const WhatsAppFab = () => {
   return (
     <a
-      href="https://wa.me/254700000000"
+      href="https://wa.me/254793948975"
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
