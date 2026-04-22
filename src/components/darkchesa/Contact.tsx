@@ -1,40 +1,30 @@
-import { FormEvent, useState } from "react";
-import { Phone, MapPin, Instagram, MessageCircle, MessageSquare } from "lucide-react";
-import { toast } from "sonner";
+import { Phone, MapPin, Instagram, MessageCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { Section } from "./Section";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 const PHONE_DISPLAY = "+254 793 948 975";
 const PHONE_TEL = "+254793948975";
 const PHONE_WA = "254793948975";
 const IG_HANDLE = "darkchesa_art";
+const WA_TEXT = encodeURIComponent("Hello DARKCHESA, I'd like to inquire about a commission.");
 
 export const Contact = () => {
-  const [loading, setLoading] = useState(false);
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      (e.target as HTMLFormElement).reset();
-      toast.success("Message received", {
-        description: "We'll respond from the studio within 24 hours.",
-      });
-    }, 700);
-  };
-
   const channels = [
-    { Icon: Phone, label: "Call", value: PHONE_DISPLAY, href: `tel:${PHONE_TEL}` },
-    { Icon: MessageSquare, label: "SMS", value: PHONE_DISPLAY, href: `sms:${PHONE_TEL}` },
     {
       Icon: MessageCircle,
-      label: "WhatsApp",
+      label: "WhatsApp · Preferred",
       value: PHONE_DISPLAY,
-      href: `https://wa.me/${PHONE_WA}?text=${encodeURIComponent("Hello DARKCHESA, I'd like to inquire about a commission.")}`,
+      href: `https://wa.me/${PHONE_WA}?text=${WA_TEXT}`,
+      featured: true,
     },
-    { Icon: Instagram, label: "Instagram", value: `@${IG_HANDLE}`, href: `https://instagram.com/${IG_HANDLE}` },
+    { Icon: Phone, label: "Call", value: PHONE_DISPLAY, href: `tel:${PHONE_TEL}`, featured: false },
+    { Icon: MessageSquare, label: "SMS", value: PHONE_DISPLAY, href: `sms:${PHONE_TEL}`, featured: false },
+    {
+      Icon: Instagram,
+      label: "Instagram",
+      value: `@${IG_HANDLE}`,
+      href: `https://instagram.com/${IG_HANDLE}`,
+      featured: false,
+    },
   ];
 
   return (
@@ -42,33 +32,42 @@ export const Contact = () => {
       id="contact"
       eyebrow="Begin a Commission"
       title={<>Let's make <em className="text-crimson not-italic font-display italic">something lasting.</em></>}
-      intro="Tell us about the piece you have in mind. Every commission begins with a conversation."
+      intro="Every commission begins with a conversation. WhatsApp is the fastest way to reach the studio."
       className="bg-charcoal-soft"
     >
-      <div className="grid lg:grid-cols-12 gap-12">
-        {/* Info */}
-        <div className="lg:col-span-5 space-y-4">
-          {channels.map(({ Icon, label, value, href }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel={href.startsWith("http") ? "noreferrer" : undefined}
-              className="group flex items-start gap-4 border border-border p-5 hover:border-crimson transition-colors"
-            >
-              <Icon className="text-crimson mt-1" size={20} strokeWidth={1.25} />
-              <div>
-                <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">
-                  {label}
+      <div className="grid lg:grid-cols-12 gap-10 items-start">
+        {/* Featured WhatsApp CTA */}
+        <div className="lg:col-span-7">
+          <a
+            href={`https://wa.me/${PHONE_WA}?text=${WA_TEXT}`}
+            target="_blank"
+            rel="noreferrer"
+            className="group relative block bg-card border border-crimson p-8 md:p-10 shadow-gallery hover:shadow-frame transition-all overflow-hidden"
+          >
+            <div className="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-gradient-crimson opacity-20 blur-3xl group-hover:opacity-30 transition-opacity" />
+            <div className="relative flex items-start gap-5">
+              <div className="h-14 w-14 shrink-0 flex items-center justify-center bg-gradient-crimson text-primary-foreground shadow-frame">
+                <MessageCircle size={26} strokeWidth={1.5} />
+              </div>
+              <div className="flex-1">
+                <div className="text-[10px] tracking-[0.4em] uppercase text-crimson mb-2">
+                  Preferred · Replies within minutes
                 </div>
-                <div className="font-display text-lg text-ivory group-hover:text-crimson transition-colors">
-                  {value}
+                <h3 className="font-display text-3xl md:text-4xl text-ivory leading-tight">
+                  Chat on WhatsApp
+                </h3>
+                <p className="mt-3 text-sm text-muted-foreground max-w-md">
+                  Send a message, share references, and we'll quote your piece. No forms, no waiting.
+                </p>
+                <div className="mt-6 inline-flex items-center gap-3 text-xs tracking-[0.3em] uppercase text-ivory group-hover:text-crimson transition-colors">
+                  {PHONE_DISPLAY}
+                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
-            </a>
-          ))}
+            </div>
+          </a>
 
-          <div className="flex items-start gap-4 border border-border p-5">
+          <div className="mt-6 flex items-start gap-4 border border-border p-5 bg-card">
             <MapPin className="text-crimson mt-1" size={20} strokeWidth={1.25} />
             <div>
               <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">Studio</div>
@@ -78,75 +77,33 @@ export const Contact = () => {
           </div>
         </div>
 
-        {/* Form */}
-        <form onSubmit={onSubmit} className="lg:col-span-7 bg-card border border-border p-8 md:p-10 space-y-6">
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div>
-              <label className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2 block">
-                Name
-              </label>
-              <Input
-                required
-                name="name"
-                placeholder="Your full name"
-                className="bg-transparent border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-crimson text-ivory"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2 block">
-                Email
-              </label>
-              <Input
-                required
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                className="bg-transparent border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-crimson text-ivory"
-              />
-            </div>
+        {/* Other channels */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground mb-2">
+            Other Channels
           </div>
-
-          <div>
-            <label className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2 block">
-              Service Interest
-            </label>
-            <select
-              name="service"
-              required
-              defaultValue=""
-              className="w-full bg-transparent border-0 border-b border-border py-2 text-ivory focus:outline-none focus:border-crimson"
-            >
-              <option value="" disabled className="bg-card">Select one…</option>
-              <option className="bg-card">Sketching</option>
-              <option className="bg-card">Digital Coloring</option>
-              <option className="bg-card">Printing</option>
-              <option className="bg-card">Framing</option>
-              <option className="bg-card">Full Commission (Sketch → Frame)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-2 block">
-              Tell us about your piece
-            </label>
-            <Textarea
-              required
-              name="message"
-              rows={5}
-              placeholder="Subject, intended size, any references, deadlines…"
-              className="bg-transparent border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-crimson text-ivory resize-none"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="group relative inline-flex items-center gap-3 bg-gradient-crimson text-primary-foreground px-8 py-4 text-xs tracking-[0.3em] uppercase shadow-frame hover:shadow-gallery transition-all disabled:opacity-60"
-          >
-            {loading ? "Sending…" : "Send Inquiry"}
-            <span className="h-px w-6 bg-current transition-all group-hover:w-10" />
-          </button>
-        </form>
+          {channels
+            .filter((c) => !c.featured)
+            .map(({ Icon, label, value, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                className="group flex items-start gap-4 border border-border p-5 hover:border-crimson transition-colors"
+              >
+                <Icon className="text-crimson mt-1" size={20} strokeWidth={1.25} />
+                <div>
+                  <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-1">
+                    {label}
+                  </div>
+                  <div className="font-display text-lg text-ivory group-hover:text-crimson transition-colors">
+                    {value}
+                  </div>
+                </div>
+              </a>
+            ))}
+        </div>
       </div>
     </Section>
   );
