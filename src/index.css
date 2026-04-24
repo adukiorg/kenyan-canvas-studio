@@ -121,4 +121,19 @@
     inset: 0;
     background: radial-gradient(circle at 30% 20%, hsl(348 60% 30% / 0.25), transparent 60%);
   }
+  /* Protect artwork imagery from casual download / screenshot capture */
+  .no-capture {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    pointer-events: none;
+  }
+  .no-capture-wrap {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
 }
