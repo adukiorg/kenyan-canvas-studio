@@ -28,12 +28,23 @@ export const Placeholder = ({ label, caption, className, ratio = "portrait", ima
       )}
     >
       {image ? (
-        <img
-          src={image}
-          alt={alt || caption || label || "Artwork"}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        />
+        <>
+          <img
+            src={image}
+            alt={alt || caption || label || "Artwork"}
+            loading="lazy"
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+            onDragStart={(e) => e.preventDefault()}
+            className="no-capture absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+          {/* invisible overlay further blocks long-press save / drag on mobile */}
+          <div
+            aria-hidden
+            onContextMenu={(e) => e.preventDefault()}
+            className="absolute inset-0 z-[1] bg-transparent"
+          />
+        </>
       ) : (
         <>
           {/* corner ticks */}

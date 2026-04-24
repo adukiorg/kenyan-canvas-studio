@@ -3,7 +3,9 @@ import { Hero } from "@/components/darkchesa/Hero";
 import { About } from "@/components/darkchesa/About";
 import { Services } from "@/components/darkchesa/Services";
 import { Gallery } from "@/components/darkchesa/Gallery";
+import { Skills } from "@/components/darkchesa/Skills";
 import { Process } from "@/components/darkchesa/Process";
+import { TimeLapse } from "@/components/darkchesa/TimeLapse";
 import { Pricing } from "@/components/darkchesa/Pricing";
 import { Contact } from "@/components/darkchesa/Contact";
 import { Footer } from "@/components/darkchesa/Footer";
@@ -17,7 +19,9 @@ const Index = () => {
       <About />
       <Services />
       <Gallery />
+      <Skills />
       <Process />
+      <TimeLapse />
       <Pricing />
       <Contact />
       <Footer />
