@@ -8,31 +8,49 @@ const SKETCH = 95.72;
 const COLOR = 94.83;
 const PRINT = 52.98;
 
-const frameBySize: Record<"A4" | "A3" | "A2", number> = {
+const frameBySize: Record<"A4" | "A3" | "A2" | "A1" | "A0", number> = {
   A4: 30.25,
   A3: 45.30,
   A2: 60.45,
+  A1: 95.80,
+  A0: 142.50,
+};
+
+// Print Only matches the Gallery "Print ($)" column exactly
+const printBySize: Record<"A4" | "A3" | "A2", string> = {
+  A4: "52.98",
+  A3: "98.28",
+  A2: "113.43",
 };
 
 const fmt = (n: number) =>
   n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const sizes = ["A4", "A3", "A2"] as const;
+const fullSizes = ["A4", "A3", "A2", "A1", "A0"] as const;
+
+// A1/A0 use fixed brief-supplied totals for Full Commission
+const fullCommissionFixed: Partial<Record<(typeof fullSizes)[number], string>> = {
+  A1: "458.81",
+  A0: "623.32",
+};
 
 const tiers = [
   {
     name: "Print Only",
     tag: "HD CMYK archival",
-    items: sizes.map((s) => ({ size: s, price: fmt(PRINT) })),
+    items: sizes.map((s) => ({ size: s, price: printBySize[s] })),
     perks: ["HD CMYK archival print", "Signed & numbered", "Studio packaging"],
     highlight: false,
   },
   {
     name: "Full Commission",
     tag: "Most popular",
-    items: sizes.map((s) => ({
+    items: fullSizes.map((s) => ({
       size: s,
-      price: fmt(SKETCH + COLOR + PRINT + frameBySize[s]),
+      price:
+        fullCommissionFixed[s] ??
+        fmt(SKETCH + COLOR + PRINT + frameBySize[s]),
     })),
     perks: ["Sketch + color + print", "Hardwood frame included", "Ready to hang"],
     highlight: true,
@@ -40,10 +58,14 @@ const tiers = [
   {
     name: "Premium Framed",
     tag: "Collector edition",
-    items: sizes.map((s) => ({
-      size: s,
-      price: fmt(SKETCH + COLOR + PRINT + frameBySize[s] * 1.6),
-    })),
+    items: fullSizes.map((s) => {
+      // Premium = Full Commission + 35% collector finish premium
+      const base =
+        fullCommissionFixed[s] !== undefined
+          ? Number(fullCommissionFixed[s])
+          : SKETCH + COLOR + PRINT + frameBySize[s];
+      return { size: s, price: fmt(base * 1.35) };
+    }),
     perks: ["Museum-grade glass", "Hand-finished hardwood", "Certificate of authenticity"],
     highlight: false,
   },
