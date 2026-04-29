@@ -1,5 +1,6 @@
 import { Section } from "./Section";
 import { Placeholder } from "./Placeholder";
+import studioPortrait from "@/assets/2ws.jpg";
 
 const stats = [
   { n: "08", l: "Years Creating" },
@@ -18,7 +19,7 @@ export const About = () => {
         <div className="lg:col-span-5">
           <div className="relative">
             <div className="absolute -inset-3 border border-crimson/25" />
-            <Placeholder label="Studio Portrait" caption="Nairobi · 2024" ratio="portrait" />
+            <Placeholder label="Studio Portrait" caption="Nairobi · 2024" ratio="square" image={studioPortrait} alt="Studio Portrait" />
           </div>
         </div>
 
