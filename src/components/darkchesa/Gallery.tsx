@@ -4,10 +4,11 @@ import { Section } from "./Section";
 import { Placeholder } from "./Placeholder";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import art1 from "@/assets/art-1.jpg";
-import art2 from "@/assets/art-2.jpg";
-import art4 from "@/assets/art-4.png";
-import art6 from "@/assets/art-6.png";
+import art1 from "@/assets/3.jpg";
+import art2 from "@/assets/7.2.png";
+import art4 from "@/assets/4.jpg";
+import art6 from "@/assets/6.jpg";
+import art7 from "@/assets/7.jpg"
 
 type Cat = "All" | "Sketches" | "Colored" | "Prints";
 
@@ -53,6 +54,7 @@ const works: Work[] = [
   { title: "The Ivory Collar", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 10", sizes: colorSizes, image: art2 },
   { title: "Joy in Silver", cat: "Prints", ratio: "portrait", year: "2024", medium: "HD CMYK archival print, framed", edition: "Edition of 8", sizes: printSizes, image: art4 },
   { title: "Adornment Study", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes, image: art6 },
+  { title: "Luminous Essence", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 12", sizes: colorSizes, image: art7 },
   { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1", sizes: sketchSizes },
   { title: "Sketch 02 — Hands at Rest", cat: "Sketches", ratio: "landscape", year: "2025", medium: "Charcoal study", edition: "Original · 1 of 1", sizes: sketchSizes },
   { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1", sizes: sketchSizes },

@@ -1,6 +1,6 @@
 import { ArrowDown } from "lucide-react";
 import { Placeholder } from "./Placeholder";
-import heroArt from "@/assets/art-1.jpg";
+import heroArt from "@/assets/2ws.jpg";
 
 export const Hero = () => {
   const scrollTo = (id: string) =>
