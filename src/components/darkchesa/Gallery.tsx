@@ -9,6 +9,7 @@ import art2 from "@/assets/7.2.png";
 import art4 from "@/assets/4.jpg";
 import art6 from "@/assets/6.jpg";
 import art7 from "@/assets/7.jpg"
+import art8 from "@/assets/2ws.jpg"
 
 type Cat = "All" | "Sketches" | "Colored" | "Prints";
 
@@ -48,22 +49,34 @@ const printSizes: Size[] = [
   { size: "A2 Framed", dims: "42 × 59.4 cm", price: "113.43" },
 ];
 
-// 4 real artworks + 6 styled placeholders = 10 total
+// Real artworks scattered with styled placeholders
 const works: Work[] = [
   { title: "Bloom in Crimson", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 12", sizes: colorSizes, image: art1 },
-  { title: "The Ivory Collar", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 10", sizes: colorSizes, image: art2 },
-  { title: "Joy in Silver", cat: "Prints", ratio: "portrait", year: "2024", medium: "HD CMYK archival print, framed", edition: "Edition of 8", sizes: printSizes, image: art4 },
-  { title: "Adornment Study", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes, image: art6 },
-  { title: "Luminous Essence", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 12", sizes: colorSizes, image: art7 },
   { title: "Sketch 01 — Portrait Study", cat: "Sketches", ratio: "portrait", year: "2025", medium: "Graphite on paper, digitised", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "The Ivory Collar", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 10", sizes: colorSizes, image: art4 },
   { title: "Sketch 02 — Hands at Rest", cat: "Sketches", ratio: "landscape", year: "2025", medium: "Charcoal study", edition: "Original · 1 of 1", sizes: sketchSizes },
-  { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "Joy in Silver", cat: "Prints", ratio: "portrait", year: "2024", medium: "HD CMYK archival print, framed", edition: "Edition of 8", sizes: printSizes, image: art2 },
   { title: "Print 01 — Edition of 12", cat: "Prints", ratio: "square", year: "2024", medium: "HD CMYK archival print", edition: "Edition of 12", sizes: printSizes },
+  { title: "Adornment Study", cat: "Colored", ratio: "tall", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes, image: art6 },
+  { title: "Sketch 03 — Elder Profile", cat: "Sketches", ratio: "tall", year: "2023", medium: "Graphite on paper", edition: "Original · 1 of 1", sizes: sketchSizes },
+  { title: "Luminous Essence", cat: "Colored", ratio: "tall", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 12", sizes: colorSizes, image: art7 },
   { title: "Print 02 — Diptych", cat: "Prints", ratio: "square", year: "2024", medium: "HD CMYK archival, paired", edition: "Edition of 5", sizes: printSizes },
+  { title: "Study in Monochrome", cat: "Colored", ratio: "portrait", year: "2025", medium: "Digital painting, framed print", edition: "Edition of 10", sizes: colorSizes, image: art8 },
   { title: "Color 04 — Quiet Window", cat: "Colored", ratio: "tall", year: "2025", medium: "Digital painting", edition: "Edition of 12", sizes: colorSizes },
 ];
 
 const filters: Cat[] = ["All", "Sketches", "Colored", "Prints"];
+
+// Get grid row span based on aspect ratio for masonry layout
+const getRowSpan = (ratio: "portrait" | "square" | "landscape" | "tall"): string => {
+  switch(ratio) {
+    case "portrait": return "sm:row-span-4";    // 3/4 = taller
+    case "landscape": return "sm:row-span-3";   // 4/3 = shorter
+    case "square": return "sm:row-span-3";      // 1/1 = medium
+    case "tall": return "sm:row-span-5";        // 2/3 = tallest
+    default: return "sm:row-span-4";
+  }
+};
 
 export const Gallery = () => {
   const [active, setActive] = useState<Cat>("All");
@@ -123,11 +136,11 @@ export const Gallery = () => {
         </span>
       </div>
 
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
         {filtered.map((w, i) => (
           <figure
             key={w.title}
-            className="break-inside-avoid mb-6 animate-fade-in"
+            className={cn("animate-fade-in", getRowSpan(w.ratio))}
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <button
